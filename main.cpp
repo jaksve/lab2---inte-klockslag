@@ -1,70 +1,49 @@
 #include<iostream>
 #include <iterator>
 #include <sstream>
+#include <iterator>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
-bool is_prime(unsigned in)
+bool even(string line)
 {
-    if(in<=3)
-        return in>1 ;
-    else if(in % 2 == 0 || in % 3 == 0)
-    {
-        return false;
-    }
-    unsigned i = 5;
-    while(i*i <= in)
-    {
-        if (in % i == 0 || in % (i+2) == 0)
-        {
-            return false;
-        }
-        i+=6;
-    }
+    if(line.length()== 1)
+    {return true;}
+    int space = 0;
+    int reference = distance(line.begin(), find(line.begin()+1,line.end(),'*'))-1;
 
+
+    for (auto it = line.begin()+1; it != line.end();++it)
+    {
+        if (*it == '*')
+        {
+            if (space!= reference)
+            {return false;}
+            space = 0;
+
+        }
+        else{space += 1;}
+    }
     return true;
 }
-
-int main()
-{
-    unsigned q,n;
+int main() {
     string line;
-    cin>>n>>q;
-    vector<unsigned> v;
-
-    unsigned prim = 1;
-
-    for (unsigned i = 1; i <=n ; i+=2)
+    vector <bool> v;
+    while (getline(cin, line))
     {
-        if(is_prime(i))
-        {prim+=1;}
+        if(line == "END")
+        {break;}
+        v.push_back(even(line));
     }
-
-
-
-    for (unsigned i=0;i<q;++i)
+unsigned siffra_ockso{1};
+    for (auto it : v)
     {
-        unsigned hejsan{};
-        cin>>hejsan;
-        v.push_back(hejsan);
+        cout<<siffra_ockso;
+        if (it) { cout << " EVEN"; }
+        else { cout << " NOT EVEN"; }
+        cout<<endl;
+        siffra_ockso++;
     }
-    cout<<prim<<endl;
-    for(auto it : v)
-    {
-        cout<<is_prime(it)<<endl;
-
-
-    }
-
-    /*
-
-    while(getline(cin,line))
-    {
-        stringstream ss{line};
-        ss>>q;
-        v.push_back(q);
-
-    }
-*/
-    return 0;
+    return 0 ;
 }
